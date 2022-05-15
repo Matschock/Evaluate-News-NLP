@@ -9,7 +9,11 @@ function checkForName(inputText) {
     ]
 
     if(names.includes(inputText)) {
-        alert("Welcome, Captain!")
+        alert(`Analysing: /
+                ${inputText}`)
+    } else {
+        let message = "Analysing:" + "\n" + inputText;
+        alert(message)
     }
 }
 

@@ -1,11 +1,13 @@
 header {
     display: flex;
     justify-content: space-between;
-    padding: 10px 40px;
+    padding: 20px 40px;
+    background-color: #dcdcdc;
+    border-bottom: 1px solid #bebebe;
 }
 
 .headline{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 18px;
-    color: blue;
+    color: rgb(0, 0, 0);
 }
