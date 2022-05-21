@@ -1,21 +1,19 @@
 function checkForName(inputText) {
     console.log("::: Running checkForName :::", inputText);
     let names = [
-        "Picard",
-        "Janeway",
-        "Kirk",
-        "Archer",
-        "Georgiou"
+        ""
     ]
-
+    document.getElementById('results').innerHTML =   ` `;
+    let nameCheckPassed = false;
     if(names.includes(inputText)) {
-        alert(`Analysing: /
-                ${inputText}`)
+        let message = "Invalid Input";
+        alert(message)
     } else {
-        document.getElementById('results').innerHTML =   ` `;
         let message = "Analysing:" + "\n" + inputText;
         alert(message)
+        nameCheckPassed = true;
     }
+    return nameCheckPassed
 }
 
 export { checkForName }

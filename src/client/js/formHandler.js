@@ -3,20 +3,19 @@ function handleSubmit(event) {
 
     // check what text was put into the form field
     let formText = document.getElementById('name').value
-
-    Client.checkForName(formText)
-
+    let checkPassed = Client.checkForName(formText)
     console.log("::: Form Submitted :::")
-    console.log(formText)
 
-    // Test sentecne: The restaurant was great even though it’s not near Madrid.
-
-    // get API Key from Server
-    getApiKeyFromServer('http://localhost:8081/meaningCloud', formText)
-    // get meaningClound Sentiment Analysis
-    .then(function(data){
-        getSentimentAnalysis(data)
-    })
+    // only run code if nameCheck of formText was passed, otherwise quit
+    if (checkPassed){
+        // Test sentecne: The restaurant was great even though it’s not near Madrid.
+        // get API Key from Server
+        getApiKeyFromServer('http://localhost:8081/meaningCloud', formText)
+        // get meaningClound Sentiment Analysis
+        .then(function(data){
+            getSentimentAnalysis(data)
+        })
+    }
 }
 
 // get API Key from Server
