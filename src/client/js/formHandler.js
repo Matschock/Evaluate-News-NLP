@@ -7,37 +7,36 @@ function handleSubmit(event) {
     Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
+    console.log(formText)
 
     // Test sentecne: The restaurant was great even though it’s not near Madrid.
 
     // get API Key from Server
-    getApiKeyFromServer('http://localhost:8081/meaningCloud')
+    getApiKeyFromServer('http://localhost:8081/meaningCloud', formText)
     // get meaningClound Sentiment Analysis
-    .then(function(api_key, formText){
-        getSentimentAnalysis(api_key, formText)
+    .then(function(data){
+        getSentimentAnalysis(data)
     })
 }
 
- 
 // get API Key from Server
-const getApiKeyFromServer = async (serveraddress) => {
+const getApiKeyFromServer = async (serveraddress, formText) => {
     const res = await fetch(serveraddress);
     try{
         const data = await res.json()
-        const api_key = data.API_ID
-        console.log(`My API ID is: ${api_key}`)
-        return api_key;
+        console.log(`My API ID is: ${data.API_ID}`)
+        const formdata = new FormData();
+        formdata.append("key", data.API_ID);
+        formdata.append("txt", formText);
+        formdata.append("lang", "auto");  // 2-letter code, like en es fr ...
+        return formdata;
     } catch(error){
         console.log("error", error);
     }
 }
 
 // get meaningClound Sentiment Analysis
-const getSentimentAnalysis = (api_key, formText) => {
-    const formdata = new FormData();
-    formdata.append("key", api_key);
-    formdata.append("txt", formText);
-    formdata.append("lang", "auto");  // 2-letter code, like en es fr ...
+const getSentimentAnalysis = (formdata) => {
 
     const requestOptions = {
         method: 'POST',
@@ -45,8 +44,12 @@ const getSentimentAnalysis = (api_key, formText) => {
         redirect: 'follow'
     };
 
+    console.log(formdata)
+    console.log(requestOptions)
+
     const res = fetch("https://api.meaningcloud.com/sentiment-2.1", requestOptions)
     .then(res => {
+        console.log(`Request outcome/response: ${res.status} - ${res.status.code} - ${res.status.msg}`)
         return res.json()
     })
     .then(function(data) {
@@ -77,9 +80,11 @@ function processSentimentJson(sentiment_short){
 
 // Update website
 const updateUI = (data) => {
+    console.log(data)
     let subjectivity = data.subjectivity;
     let irony = data.irony;
     let sentiment = processSentimentJson(data.score_tag);
+    console.log(`Raw: ${data.score_tag}, Processed: ${sentiment}`)
     document.getElementById('results').innerHTML =   `<strong>Subjectivity:</strong> ${subjectivity}\
                                                     <br><strong>Irony:</strong> ${irony}\
                                                     <br><strong>Sentiment:</strong> ${sentiment}`;

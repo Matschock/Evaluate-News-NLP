@@ -12,6 +12,7 @@ function checkForName(inputText) {
         alert(`Analysing: /
                 ${inputText}`)
     } else {
+        document.getElementById('results').innerHTML =   ` `;
         let message = "Analysing:" + "\n" + inputText;
         alert(message)
     }
