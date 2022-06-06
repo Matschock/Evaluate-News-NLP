@@ -91,3 +91,4 @@ const updateUI = (data) => {
 
     
 export { handleSubmit }
+export { processSentimentJson }
