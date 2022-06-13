@@ -6,6 +6,9 @@ import { checkForName } from '../src/client/js/nameChecker'
 describe("Testing the input checker functionality", () => {
     // The test() function has two arguments - a string description, and an actual test as a callback function.  
     test("Testing the input check function", () => {
+        // create the document for testing
+        document.body.innerHTML = `<div id="results" />`;
+        document.getElementById('results').innerHTML = 'test test test';
         // Define the input for the function, if any, in the form of variables/array
         const input = "The restaurant was great even though it is not near Madrid.";
         // Define the expected output, if any, in the form of variables/array
